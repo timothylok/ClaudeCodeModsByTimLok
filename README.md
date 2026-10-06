@@ -8,6 +8,25 @@ Three Claude Code mods (function-hook plugins) that save tokens and keep you awa
 | [`usage-bar`](#usage-bar) | Shows 5-hour and weekly rate-limit usage above the prompt |
 | [`research-offloader`](#research-offloader) | Keeps research work out of the main context |
 
+## Why: kaizen for your AI bill
+
+Kaizen is continuous improvement through small changes, each removing one source of waste (muda). These mods apply it to a Claude Code workflow:
+
+| Waste | Mod that removes it |
+| --- | --- |
+| The most expensive model doing routine work | `smart-model-router` |
+| Raw web pages filling the main context | `research-offloader` |
+| Hitting a rate limit by surprise | `usage-bar` (and the router's usage guard) |
+
+None of these is a big idea; each is one small fix. Run the cycle on your own usage:
+
+1. **Plan:** note your 5-hour and weekly usage over a normal week, using `usage-bar`.
+2. **Do:** install the mods and work as usual.
+3. **Check:** compare the next week's usage against the first.
+4. **Adjust:** tune `usageGuard`, the model options and the research trigger phrases, then repeat.
+
+What you can see, you can improve.
+
 ## Install
 
 ### Try from a local folder (development)
