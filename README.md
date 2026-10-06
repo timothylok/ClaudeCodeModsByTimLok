@@ -18,12 +18,12 @@ claude --plugin-dir D:\ai\cc-mods\smart-model-router --plugin-dir D:\ai\cc-mods\
 
 Saving a file reloads the mod in a running session.
 
-### Install from GitHub (once this folder is pushed as a repo)
+### Install from GitHub (timothylok/ClaudeCodeModsByTimLok)
 
 ```
-/plugin install smart-model-router --marketplace <owner>/<repo>
-/plugin install usage-bar --marketplace <owner>/<repo>
-/plugin install research-offloader --marketplace <owner>/<repo>
+/plugin install smart-model-router --marketplace timothylok/ClaudeCodeModsByTimLok
+/plugin install usage-bar --marketplace timothylok/ClaudeCodeModsByTimLok
+/plugin install research-offloader --marketplace timothylok/ClaudeCodeModsByTimLok
 ```
 
 Answer `y` to add the marketplace, then choose a scope. Each mod is active immediately.

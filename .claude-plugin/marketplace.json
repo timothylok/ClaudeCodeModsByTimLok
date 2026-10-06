@@ -1,6 +1,6 @@
 {
   "name": "cc-mods",
-  "owner": { "name": "tt" },
+  "owner": { "name": "timothylok" },
   "plugins": [
     { "name": "smart-model-router", "source": "./smart-model-router", "description": "Routes each turn to a heavy or light model; falls back to the light model near rate limits." },
     { "name": "usage-bar", "source": "./usage-bar", "description": "Rate-limit usage band above the prompt." },
