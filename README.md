@@ -1,11 +1,12 @@
 # cc-mods
 
-Three Claude Code mods (function-hook plugins) that save tokens and keep you aware of your limits.
+Four Claude Code mods (function-hook plugins) that save tokens and keep you aware of your limits.
 
 | Mod | What it does |
 | --- | --- |
 | [`smart-model-router`](#smart-model-router) | Picks a heavy or light model for each turn |
 | [`usage-bar`](#usage-bar) | Shows 5-hour and weekly rate-limit usage above the prompt |
+| [`context-bar`](#context-bar) | Shows how full the context window is, by category, above the prompt |
 | [`research-offloader`](#research-offloader) | Keeps research work out of the main context |
 
 ## Why: kaizen for your AI bill
@@ -17,6 +18,7 @@ Kaizen is continuous improvement through small changes, each removing one source
 | The most expensive model doing routine work | `smart-model-router` |
 | Raw web pages filling the main context | `research-offloader` |
 | Hitting a rate limit by surprise | `usage-bar` (and the router's usage guard) |
+| Context filling up unnoticed | `context-bar` |
 
 None of these is a big idea; each is one small fix. Run the cycle on your own usage:
 
@@ -32,7 +34,7 @@ What you can see, you can improve.
 ### Try from a local folder (development)
 
 ```
-claude --plugin-dir D:\ai\cc-mods\smart-model-router --plugin-dir D:\ai\cc-mods\usage-bar --plugin-dir D:\ai\cc-mods\research-offloader
+claude --plugin-dir D:\ai\cc-mods\smart-model-router --plugin-dir D:\ai\cc-mods\usage-bar --plugin-dir D:\ai\cc-mods\context-bar --plugin-dir D:\ai\cc-mods\research-offloader
 ```
 
 Saving a file reloads the mod in a running session.
@@ -42,6 +44,7 @@ Saving a file reloads the mod in a running session.
 ```
 /plugin install smart-model-router --marketplace timothylok/ClaudeCodeModsByTimLok
 /plugin install usage-bar --marketplace timothylok/ClaudeCodeModsByTimLok
+/plugin install context-bar --marketplace timothylok/ClaudeCodeModsByTimLok
 /plugin install research-offloader --marketplace timothylok/ClaudeCodeModsByTimLok
 ```
 
@@ -124,6 +127,31 @@ None.
 
 ---
 
+## context-bar
+
+A stacked bar above the prompt showing the context window, one colour per `/context` category, with a legend of the biggest categories:
+
+```
+████████▒▒▒▒░░░░░░░░░░░░░░░░░░░░ 38% · 76k/200k
+■ Messages 41k  ■ System tools 18k  ■ Memory files 6k
+```
+
+- `█` is used space, `▒` is the autocompact buffer, `░` is free space.
+- Figures are estimated locally from the last response's usage, so refreshing the bar sends no token-count requests. It refreshes after each turn and after a compaction.
+- It sits in the same band as `usage-bar` and stacks with it. It is hidden while a survey is showing.
+
+### Usage
+
+| Command | Effect |
+| --- | --- |
+| `/context-bar` | Hide or show the bar (toggle) |
+
+### Options
+
+None.
+
+---
+
 ## research-offloader
 
 When you type a research-style prompt, the mod keeps the page fetching and reading out of the main thread, so only a summary enters your context.
@@ -157,6 +185,15 @@ A toast tells you which mode was used.
 NotebookLM has no public API, so the endpoint is yours to provide. Any service that takes `{query}` and returns `{summary}` works.
 
 ---
+
+## Bug fixes
+
+### 0.1.3: `usage-bar` hid other bands above the prompt
+
+- **Symptom:** with `usage-bar` installed, a separate context bar disappeared.
+- **Cause:** both mods draw into the same band above the prompt (`ui.render` on `AbovePrompt`). The outermost hook returned its own tree without calling `next(e)`, so the hook beneath it never ran.
+- **Fix:** `usage-bar` now calls `next(e)` and stacks what comes back under its own row. `context-bar` does the same from 0.1.4, so the two show together in either order.
+- **For mod authors:** a `ui.render` hook on a shared site must `await next(e)` and include the result in its tree. In tests, add a stand-in `ui.render` hook beneath the mod so `next` has something to return.
 
 ## Development
 

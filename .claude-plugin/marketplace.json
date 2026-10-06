@@ -4,6 +4,7 @@
   "plugins": [
     { "name": "smart-model-router", "source": "./smart-model-router", "description": "Routes each turn to a heavy or light model; falls back to the light model near rate limits." },
     { "name": "usage-bar", "source": "./usage-bar", "description": "Rate-limit usage band above the prompt." },
+    { "name": "context-bar", "source": "./context-bar", "description": "Context-window bar above the prompt, one colour per /context category." },
     { "name": "research-offloader", "source": "./research-offloader", "description": "Keeps research out of the main context via an endpoint or cheap subagents." }
   ]
 }
