@@ -166,3 +166,7 @@ Each mod has `hooks/register.ts(x)`, a manifest in `.claude-plugin/plugin.json`,
 claude plugin validate <mod folder>
 claude plugin test <mod folder>
 ```
+
+## License
+
+[MIT](LICENSE)
