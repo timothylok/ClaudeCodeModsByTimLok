@@ -1,6 +1,6 @@
 {
   "name": "usage-bar",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "description": "A band above the prompt showing your 5-hour and weekly rate-limit usage, with warnings as you approach them.",
   "types": "./types/index.d.ts"

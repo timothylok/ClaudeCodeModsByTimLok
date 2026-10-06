@@ -65,19 +65,25 @@ export const register: Register = on => {
 
     const { Box, Text } = $.ui.resolve(e)
     const now = await $.clock.now()
+    // Other mods (e.g. context-bar) draw in this band too; answering without
+    // next() would replace them, so stack whatever sits beneath us.
+    const below = await next(e)
 
     return (
-      <Box>
-        <Text dimColor>Usage </Text>
-        {list.map(w => (
-          <Text key={w.kind}>
-            <Text dimColor>{LABELS[w.kind] ?? w.kind} </Text>
-            <Text color={colorFor(w.percentUsed)}>
-              {meter(w.percentUsed)} {w.percentUsed}%
+      <Box flexDirection="column">
+        <Box>
+          <Text dimColor>Usage </Text>
+          {list.map(w => (
+            <Text key={w.kind}>
+              <Text dimColor>{LABELS[w.kind] ?? w.kind} </Text>
+              <Text color={colorFor(w.percentUsed)}>
+                {meter(w.percentUsed)} {w.percentUsed}%
+              </Text>
+              <Text dimColor>{resetsIn(w.resetsAt, now)}   </Text>
             </Text>
-            <Text dimColor>{resetsIn(w.resetsAt, now)}   </Text>
-          </Text>
-        ))}
+          ))}
+        </Box>
+        {below}
       </Box>
     )
   })

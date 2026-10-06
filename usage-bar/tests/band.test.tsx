@@ -28,6 +28,12 @@ test('the band shows the measured windows and warns past 80%', async ($, on) => 
   const toasts: string[] = []
   mock.clock(on, { now: Date.parse('2026-10-06T12:00:00Z') })
   on('session.measure', ($, e) => ({ changed: e.changed }))
+  // Another mod's band (e.g. context-bar) sitting beneath ours.
+  on('ui.render', ($, e) => {
+    const { Text } = $.ui.resolve(e)
+
+    return <Text>ctx 30%</Text>
+  })
   on('ui.toast', ($, e) => {
     toasts.push(e.text)
 
@@ -53,6 +59,7 @@ test('the band shows the measured windows and warns past 80%', async ($, on) => 
     expect(await ui.find({ type: 'Text', text: /42%/ })).toBeDefined()
     expect(await ui.find({ type: 'Text', text: /2h30m/ })).toBeDefined()
     expect(await ui.find({ type: 'Text', text: /91%/ })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /ctx 30%/ })).toBeDefined()
     await ui.unmount()
   }
 })
