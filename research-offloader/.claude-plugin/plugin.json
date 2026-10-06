@@ -1,6 +1,6 @@
 {
   "name": "research-offloader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Spots research prompts and keeps them out of the main context: sends them to your own research endpoint (e.g. a NotebookLM bridge) if configured, otherwise makes Claude delegate to a cheap subagent.",
   "userConfig": {
     "endpoint": { "type": "string", "title": "Research endpoint", "description": "Optional URL that takes POST {query} and returns {summary}. Leave empty to delegate to a subagent instead.", "default": "" },

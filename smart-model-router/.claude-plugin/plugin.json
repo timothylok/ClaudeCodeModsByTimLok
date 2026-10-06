@@ -1,6 +1,6 @@
 {
   "name": "smart-model-router",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Routes each main-thread turn to a heavy or light model based on the prompt, and falls back to the light model near your rate limits.",
   "userConfig": {
     "heavyModel": { "type": "string", "title": "Heavy model", "description": "Model for architecture / deep-reasoning turns", "default": "claude-opus-5-5" },
